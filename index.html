@@ -421,6 +421,7 @@
             </div>
         </section>
 
+        <!-- SEKSI HARGA (UPDATE TAHUNAN / LIFETIME + FITUR) -->
         <section id="harga" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
@@ -428,46 +429,70 @@
                     <p class="text-lg text-slate-600">Harga transparan tanpa biaya tersembunyi. Mulai gratis dan upgrade sesuai kebutuhan bisnis Anda.</p>
                     
                     <div class="flex items-center justify-center gap-3 mt-8">
-                        <span class="text-sm font-medium text-slate-500">Bulanan</span>
-                        <button class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-brand-500 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" aria-checked="true">
-                            <span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+                        <span class="text-sm font-medium text-slate-900" id="labelTahunan">Tahunan</span>
+                        <button id="billingToggle" onclick="togglePricing()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" aria-checked="false">
+                            <span id="toggleKnob" class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
                         </button>
-                        <span class="text-sm font-bold text-slate-900">Tahunan <span class="text-xs font-semibold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-full ml-1">Hemat 20%</span></span>
+                        <span class="text-sm font-medium text-slate-500" id="labelLifetime">Lifetime <span class="text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-full ml-1">Sekali Bayar</span></span>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
-                    <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+                    <!-- Basic Tier -->
+                    <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col">
                         <h3 class="text-xl font-bold text-slate-900 mb-2">Pemula</h3>
                         <p class="text-sm text-slate-500 mb-6">Cocok untuk mencoba berjualan online.</p>
                         <div class="mb-6">
                             <span class="text-4xl font-extrabold text-slate-900">Rp 0</span>
-                            <span class="text-slate-500">/bulan</span>
+                            <span class="text-slate-500 billing-period">/tahun</span>
                         </div>
-                        <a href="#" class="block w-full py-3 px-4 bg-slate-50 text-slate-900 font-semibold text-center rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors mb-8">Daftar Gratis</a>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 shrink-0"></i> 1 Toko Online (Subdomain)</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 shrink-0"></i> Maksimal 50 Produk</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 shrink-0"></i> Kasir POS Dasar</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-400 opacity-50"><i data-lucide="x" class="w-5 h-5 shrink-0"></i> Multi WA Gateway (Fonnte/WAplus)</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-400 opacity-50"><i data-lucide="x" class="w-5 h-5 shrink-0"></i> Export Laporan Analytics</li>
+                        </ul>
+                        <a href="#" onclick="openModal(event)" class="block w-full py-3 px-4 bg-slate-50 text-slate-900 font-semibold text-center rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors mt-auto">Daftar Gratis</a>
                     </div>
 
-                    <div class="bg-brand-500 rounded-3xl p-8 border-2 border-brand-500 shadow-2xl relative transform md:-translate-y-4">
+                    <!-- Pro Tier -->
+                    <div class="bg-brand-500 rounded-3xl p-8 border-2 border-brand-500 shadow-2xl relative transform md:-translate-y-4 flex flex-col">
                         <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-100 text-brand-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
                             Paling Populer
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">Juragan</h3>
                         <p class="text-sm text-brand-100 mb-6">Fokus meningkatkan omset penjualan.</p>
                         <div class="mb-6">
-                            <span class="text-4xl font-extrabold text-white">Rp 99rb</span>
-                            <span class="text-brand-200">/bulan</span>
+                            <span class="text-4xl font-extrabold text-white transition-all duration-300" id="priceJuragan">Rp 299rb</span>
+                            <span class="text-brand-200 billing-period transition-all duration-300">/tahun</span>
                         </div>
-                        <a href="#" onclick="openModal(event)" class="block w-full py-3 px-4 bg-white text-brand-600 font-bold text-center rounded-xl shadow-md hover:bg-slate-50 transition-colors mb-8">Pilih Paket Pro</a>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3 text-sm text-white"><i data-lucide="check" class="w-5 h-5 text-brand-200 shrink-0"></i> 1 Toko Online Custom Domain</li>
+                            <li class="flex items-start gap-3 text-sm text-white"><i data-lucide="check" class="w-5 h-5 text-brand-200 shrink-0"></i> Produk & Pesanan Unlimited</li>
+                            <li class="flex items-start gap-3 text-sm text-white"><i data-lucide="check" class="w-5 h-5 text-brand-200 shrink-0"></i> Multi WA Gateway (WAplus, dll)</li>
+                            <li class="flex items-start gap-3 text-sm text-white"><i data-lucide="check" class="w-5 h-5 text-brand-200 shrink-0"></i> Export Laporan Analytics</li>
+                            <li class="flex items-start gap-3 text-sm text-white"><i data-lucide="check" class="w-5 h-5 text-brand-200 shrink-0"></i> Support Prioritas (24/7)</li>
+                        </ul>
+                        <a href="#" onclick="openModal(event)" class="block w-full py-3 px-4 bg-white text-brand-600 font-bold text-center rounded-xl shadow-md hover:bg-slate-50 transition-colors mt-auto">Pilih Paket Juragan</a>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Korporasi</h3>
-                        <p class="text-sm text-slate-500 mb-6">Solusi kustom untuk banyak cabang.</p>
+                    <!-- Enterprise Tier -->
+                    <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col">
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Agency</h3>
+                        <p class="text-sm text-slate-500 mb-6">Solusi whitelabel untuk buka jasa web.</p>
                         <div class="mb-6">
-                            <span class="text-4xl font-extrabold text-slate-900">Hubungi</span>
-                            <span class="text-slate-500">Kami</span>
+                            <span class="text-4xl font-extrabold text-slate-900 transition-all duration-300" id="priceAgency">Rp 999rb</span>
+                            <span class="text-slate-500 billing-period transition-all duration-300">/tahun</span>
                         </div>
-                        <a href="#" class="block w-full py-3 px-4 bg-slate-50 text-slate-900 font-semibold text-center rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors mb-8">Kontak Sales</a>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-emerald-500 shrink-0"></i> Manajemen Toko Unlimited (Sub-User)</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-emerald-500 shrink-0"></i> Whitelabel Logo & Brand Dashboard</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-emerald-500 shrink-0"></i> Atur Harga & Tagihan ke User Sendiri</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-emerald-500 shrink-0"></i> Akses Source Code & API</li>
+                            <li class="flex items-start gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-5 h-5 text-emerald-500 shrink-0"></i> Dedicated Account Manager</li>
+                        </ul>
+                        <a href="#" class="block w-full py-3 px-4 bg-slate-50 text-slate-900 font-semibold text-center rounded-xl border border-slate-200 hover:bg-slate-100 transition-colors mt-auto">Kontak Sales</a>
                     </div>
                 </div>
             </div>
@@ -557,6 +582,51 @@
 
         // URL Web App dari Google Apps Script
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwKbN_R8gdRG5_jLniXD0LXZSMTUiU8gO5Ae-s3FAnfxV7gpaRstdovRiJbS_izuZeQpw/exec'; 
+
+        // ==========================================
+        // TOGGLE PRICING (TAHUNAN / LIFETIME)
+        // ==========================================
+        let isLifetime = false;
+        function togglePricing() {
+            isLifetime = !isLifetime;
+            const toggleBtn = document.getElementById('billingToggle');
+            const toggleKnob = document.getElementById('toggleKnob');
+            
+            const labelTahunan = document.getElementById('labelTahunan');
+            const labelLifetime = document.getElementById('labelLifetime');
+            
+            const periods = document.querySelectorAll('.billing-period');
+            const priceJuragan = document.getElementById('priceJuragan');
+            const priceAgency = document.getElementById('priceAgency');
+
+            if (isLifetime) {
+                // Switch ke Lifetime
+                toggleBtn.classList.replace('bg-slate-300', 'bg-brand-500');
+                toggleKnob.classList.replace('translate-x-0', 'translate-x-5');
+                
+                labelTahunan.classList.replace('text-slate-900', 'text-slate-500');
+                labelTahunan.classList.replace('font-bold', 'font-medium');
+                labelLifetime.classList.replace('text-slate-500', 'text-slate-900');
+                labelLifetime.classList.replace('font-medium', 'font-bold');
+
+                periods.forEach(p => p.innerText = '/lifetime');
+                priceJuragan.innerText = 'Rp 899rb'; // Contoh harga lifetime
+                priceAgency.innerText = 'Rp 2.9Jt';  // Contoh harga lifetime
+            } else {
+                // Switch ke Tahunan
+                toggleBtn.classList.replace('bg-brand-500', 'bg-slate-300');
+                toggleKnob.classList.replace('translate-x-5', 'translate-x-0');
+                
+                labelLifetime.classList.replace('text-slate-900', 'text-slate-500');
+                labelLifetime.classList.replace('font-bold', 'font-medium');
+                labelTahunan.classList.replace('text-slate-500', 'text-slate-900');
+                labelTahunan.classList.replace('font-medium', 'font-bold');
+
+                periods.forEach(p => p.innerText = '/tahun');
+                priceJuragan.innerText = 'Rp 299rb';
+                priceAgency.innerText = 'Rp 999rb';
+            }
+        }
 
         // Navbar Scroll 
         const navbar = document.getElementById('navbar');
