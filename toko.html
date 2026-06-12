@@ -8,13 +8,31 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar { 
+            display: none; 
+        }
+        
+        .hide-scrollbar { 
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
         
         /* Animasi Skeleton Loading */
-        .skeleton { background: #e2e8f0; animation: pulse 1.5s infinite ease-in-out; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .skeleton { 
+            background: #e2e8f0; 
+            animation: pulse 1.5s infinite ease-in-out; 
+        }
+        
+        @keyframes pulse { 
+            0% { opacity: 1; } 
+            50% { opacity: 0.5; } 
+            100% { opacity: 1; } 
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased pb-24">
@@ -39,6 +57,7 @@
                     </div>
                 </div>
             </div>
+            
             <button onclick="toggleCart()" class="relative p-2 text-slate-600 hover:bg-slate-50 rounded-full transition-colors">
                 <i data-lucide="shopping-cart" class="w-6 h-6"></i>
                 <span id="cartBadge" class="absolute top-0 right-0 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center transform scale-0 transition-transform">0</span>
@@ -48,9 +67,13 @@
 
     <!-- Main Content -->
     <main class="max-w-3xl mx-auto px-4 py-6">
+        
         <!-- Banner Search -->
         <div class="relative bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-5 mb-8 shadow-md overflow-hidden text-white">
-            <div class="absolute -right-4 -bottom-4 opacity-20"><i data-lucide="shopping-bag" class="w-32 h-32"></i></div>
+            <div class="absolute -right-4 -bottom-4 opacity-20">
+                <i data-lucide="shopping-bag" class="w-32 h-32"></i>
+            </div>
+            
             <h2 class="text-xl font-bold mb-1 relative z-10">Selamat Datang!</h2>
             <p class="text-xs text-emerald-50 mb-4 relative z-10 max-w-[80%]">Pilih produk yang Anda inginkan dan pesan langsung via WhatsApp.</p>
             
@@ -72,6 +95,7 @@
         <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
             <!-- Isi dari JS -->
         </div>
+        
     </main>
 
     <!-- Footer Branding -->
@@ -91,6 +115,7 @@
                 <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Total Belanja</p>
                 <p class="text-xl font-black text-slate-800 leading-none mt-0.5" id="bottomCartTotal">Rp 0</p>
             </div>
+            
             <button onclick="toggleCart()" class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl text-sm font-bold flex items-center shadow-lg transition-colors">
                 Lihat Keranjang <span class="bg-white/20 text-white text-[10px] px-2 py-0.5 rounded-full ml-2" id="bottomCartItems">0</span>
             </button>
@@ -99,7 +124,10 @@
 
     <!-- Modal Cart & Checkout Fullscreen -->
     <div id="cartModal" class="fixed inset-0 z-50 hidden">
+        
         <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="toggleCart()"></div>
+        
+        <!-- Max-width diset agar di layar PC tidak melebar jelek -->
         <div class="absolute bottom-0 left-0 right-0 mx-auto w-full max-w-2xl h-[90vh] bg-white rounded-t-3xl shadow-2xl flex flex-col transform transition-transform duration-300 translate-y-full" id="cartContent">
             
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-white rounded-t-3xl shrink-0">
@@ -108,6 +136,7 @@
             </div>
 
             <div class="flex-1 overflow-y-auto p-4 bg-slate-50">
+                
                 <!-- Daftar Item -->
                 <div id="cartItemsList" class="space-y-3 mb-6">
                     <!-- JS Injected -->
@@ -121,12 +150,14 @@
                         <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
                         <input type="text" id="buyerName" class="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-500" placeholder="Budi Santoso">
                     </div>
+                    
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Alamat Pengiriman / Catatan <span class="text-red-500">*</span></label>
                         <textarea id="buyerNotes" rows="2" class="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-500" placeholder="Jl. Sudirman No 123..."></textarea>
                     </div>
 
                     <h4 class="font-bold text-slate-800 border-b pb-2 text-sm mt-6">Metode Pembayaran</h4>
+                    
                     <div>
                         <select id="paymentMethod" class="w-full px-3 py-3 border border-slate-200 rounded-lg text-sm font-bold bg-slate-50 focus:outline-none focus:border-emerald-500" onchange="checkPaymentMethod()">
                             <option value="Transfer Bank">Transfer Bank</option>
@@ -149,6 +180,7 @@
                         <p class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider mb-2">Scan QRIS Untuk Bayar</p>
                         <img id="qrisImg" src="" class="w-40 h-40 mx-auto rounded-lg shadow-sm border border-emerald-200 object-contain bg-white">
                     </div>
+                    
                 </div>
             </div>
 
@@ -158,10 +190,12 @@
                     <span class="text-sm font-bold text-slate-500">Total Pembayaran</span>
                     <span class="text-2xl font-black text-emerald-600" id="modalTotalPay">Rp 0</span>
                 </div>
+                
                 <button onclick="submitOrderWA()" id="btnSubmitOrder" class="w-full py-3.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-xl flex justify-center items-center gap-2 shadow-lg transition-all">
                     <i data-lucide="send" class="w-5 h-5"></i> Kirim Pesanan ke WhatsApp
                 </button>
             </div>
+            
         </div>
     </div>
 
@@ -169,12 +203,16 @@
     <!-- MODAL SECRET PIN (EASTER EGG LOGIN) -->
     <!-- ========================================== -->
     <div id="pinModal" class="fixed inset-0 z-[150] hidden">
+        
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closePinModal()"></div>
+        
         <div class="flex items-center justify-center min-h-screen px-4">
             <div class="relative bg-white rounded-2xl shadow-2xl p-6 w-full max-w-xs text-center z-10 transform transition-all scale-95 opacity-0" id="pinContent">
+                
                 <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-600">
                     <i data-lucide="lock" class="w-6 h-6"></i>
                 </div>
+                
                 <h3 class="text-lg font-bold text-slate-800 mb-1">Akses Admin</h3>
                 <p class="text-xs text-slate-500 mb-6">Masukkan PIN rahasia Anda</p>
                 
@@ -187,18 +225,32 @@
                 <p id="pinError" class="text-xs text-red-500 font-bold hidden mb-4">PIN Salah!</p>
                 
                 <button onclick="verifyPin()" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-colors">Masuk</button>
+                
             </div>
         </div>
+        
     </div>
 
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ========================================== -->
     <script>
         // Init Icons
         lucide.createIcons();
-        const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        
+        // Formatter Mata Uang
+        const formatRupiah = (angka) => {
+            return new Intl.NumberFormat('id-ID', { 
+                style: 'currency', 
+                currency: 'IDR', 
+                minimumFractionDigits: 0 
+            }).format(angka);
+        };
         
         // Ganti dengan URL Web App Apps Script lo yang valid
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKbN_R8gdRG5_jLniXD0LXZSMTUiU8gO5Ae-s3FAnfxV7gpaRstdovRiJbS_izuZeQpw/exec';
 
+        // Variabel Global
         let storeData = {};
         let products = [];
         let cart = [];
@@ -213,17 +265,23 @@
 
         // 2. Fetch Data Toko & Katalog
         async function fetchStoreCatalog() {
-            if(!storeSlug) return showLoaderError("Link toko tidak valid.");
+            if (!storeSlug) {
+                return showLoaderError("Link toko tidak valid.");
+            }
 
             try {
                 let fd = new FormData();
                 fd.append('action', 'get_store_catalog');
                 fd.append('slug', storeSlug);
 
-                const response = await fetch(SCRIPT_URL, { method: 'POST', body: fd });
+                const response = await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: fd 
+                });
+                
                 const res = await response.json();
 
-                if(res.success) {
+                if (res.success) {
                     storeData = res.store;
                     products = res.products;
                     buildStoreUI();
@@ -235,37 +293,50 @@
             }
         }
 
-        // 3. Render UI Toko
+        // 3. Render UI Toko Awal
         function buildStoreUI() {
             // Hilangkan Loader
             document.getElementById('loaderScreen').classList.add('hidden');
 
-            // Setup Header & Info
+            // Setup Header & Info Toko
             document.title = storeData.nama_toko + " - iMersWAstore";
             document.getElementById('storeName').innerText = storeData.nama_toko;
             
-            if(storeData.logo) {
+            if (storeData.logo) {
                 document.getElementById('storeLogo').innerHTML = `<img src="${storeData.logo}" class="w-full h-full object-cover">`;
             } else {
                 document.getElementById('storeLogo').innerHTML = `<span class="font-bold text-lg">${storeData.nama_toko.charAt(0)}</span>`;
             }
 
             // Render Info Pembayaran di Modal Checkout
-            if(storeData.bank_info) {
+            const sel = document.getElementById('paymentMethod');
+            
+            if (storeData.bank_info) {
                 document.getElementById('bankInfoText').innerText = storeData.bank_info;
             } else {
-                const sel = document.getElementById('paymentMethod');
-                for(let i=0; i<sel.options.length; i++){ if(sel.options[i].value === 'Transfer Bank') sel.remove(i); }
+                // Menghapus pilihan Transfer Bank jika tidak ada info
+                for(let i = 0; i < sel.options.length; i++) { 
+                    if(sel.options[i].value === 'Transfer Bank') {
+                        sel.remove(i);
+                    }
+                }
             }
 
-            if(storeData.qris_url) {
+            if (storeData.qris_url) {
                 document.getElementById('qrisImg').src = storeData.qris_url;
             } else {
-                const sel = document.getElementById('paymentMethod');
-                for(let i=0; i<sel.options.length; i++){ if(sel.options[i].value === 'QRIS') sel.remove(i); }
+                // Menghapus pilihan QRIS jika tidak ada url
+                for(let i = 0; i < sel.options.length; i++) { 
+                    if(sel.options[i].value === 'QRIS') {
+                        sel.remove(i);
+                    }
+                }
             }
 
+            // Render Produk
             renderProductGrid(products);
+            
+            // Inisialisasi status metode pembayaran
             checkPaymentMethod(); 
 
             // Setup Event Listener untuk Secret Tap (Hanya jika diset ON)
@@ -285,13 +356,13 @@
             // Ambil jumlah tap yang dibutuhkan dari data toko, default 5
             const targetTap = parseInt(storeData.secret_tap_count) || 5;
             
-            if(secretTapCount >= targetTap) {
+            if (secretTapCount >= targetTap) {
                 openPinModal();
                 secretTapCount = 0; // reset
             } else {
                 // Reset tap jika user gak tap lagi dalam 1 detik
-                secretTapTimer = setTimeout(() => {
-                    secretTapCount = 0;
+                secretTapTimer = setTimeout(() => { 
+                    secretTapCount = 0; 
                 }, 1000);
             }
         }
@@ -299,15 +370,18 @@
         function openPinModal() {
             const pinModal = document.getElementById('pinModal');
             const pinContent = document.getElementById('pinContent');
+            
             document.getElementById('secretPinInput').value = '';
             document.getElementById('pinError').classList.add('hidden');
             
             pinModal.classList.remove('hidden');
+            
             setTimeout(() => {
                 pinContent.classList.remove('scale-95', 'opacity-0');
                 pinContent.classList.add('scale-100', 'opacity-100');
                 document.getElementById('secretPinInput').focus();
             }, 10);
+            
             lucide.createIcons();
         }
 
@@ -317,13 +391,17 @@
             
             pinContent.classList.remove('scale-100', 'opacity-100');
             pinContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => pinModal.classList.add('hidden'), 300);
+            
+            setTimeout(() => {
+                pinModal.classList.add('hidden');
+            }, 300);
         }
 
         function verifyPin() {
             const input = document.getElementById('secretPinInput').value;
+            
             // Pengecekan PIN
-            if(input === storeData.secret_pin.toString()) {
+            if (input === storeData.secret_pin.toString()) {
                 // Jika PIN benar, arahkan ke login toko ini
                 window.location.href = 'login.html?t=' + storeSlug;
             } else {
@@ -335,7 +413,9 @@
 
         // Support tombol "Enter" di keyboard pas masukin PIN
         document.getElementById('secretPinInput').addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') verifyPin();
+            if (e.key === 'Enter') {
+                verifyPin();
+            }
         });
 
         // ==========================================
@@ -343,13 +423,20 @@
         // ==========================================
         function filterProducts() {
             const q = document.getElementById('searchProd').value.toLowerCase();
-            renderProductGrid(products.filter(p => p.name.toLowerCase().includes(q)));
+            const filteredList = products.filter(p => p.name.toLowerCase().includes(q));
+            renderProductGrid(filteredList);
         }
 
         function renderProductGrid(list) {
             const grid = document.getElementById('productGrid');
-            if(list.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-10"><i data-lucide="package-x" class="w-10 h-10 mx-auto text-slate-300 mb-2"></i><p class="text-sm text-slate-500">Produk tidak ditemukan.</p></div>`;
+            
+            if (list.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-10">
+                        <i data-lucide="package-x" class="w-10 h-10 mx-auto text-slate-300 mb-2"></i>
+                        <p class="text-sm text-slate-500">Produk tidak ditemukan.</p>
+                    </div>
+                `;
                 lucide.createIcons();
                 return;
             }
@@ -381,47 +468,62 @@
                 </div>
                 `;
             }).join('');
+            
             lucide.createIcons();
         }
 
         // ==========================================
-        // CART LOGIC
+        // CART LOGIC (KERANJANG BELANJA)
         // ==========================================
         function addCart(id) {
             const product = products.find(p => p.id === id);
-            if(!product) return;
+            
+            if (!product) {
+                return;
+            }
 
             const exist = cart.find(c => c.id === id);
-            if(exist) {
-                if(exist.qty >= product.stock) return alert("Maksimal stok tercapai!");
+            
+            if (exist) {
+                if (exist.qty >= product.stock) {
+                    return alert("Maksimal stok tercapai!");
+                }
                 exist.qty++;
             } else {
                 cart.push({ ...product, qty: 1 });
             }
+            
             updateCartUI();
             
-            // Animasi Bounce Button
+            // Animasi Bounce Button Cart Icon di Header
             const badge = document.getElementById('cartBadge');
             badge.classList.add('animate-bounce');
-            setTimeout(() => badge.classList.remove('animate-bounce'), 1000);
+            setTimeout(() => {
+                badge.classList.remove('animate-bounce');
+            }, 1000);
         }
 
         function updateCartQty(id, delta) {
             const idx = cart.findIndex(c => c.id === id);
-            if(idx === -1) return;
+            
+            if (idx === -1) {
+                return;
+            }
             
             const item = cart[idx];
             item.qty += delta;
             
-            if(item.qty <= 0) cart.splice(idx, 1);
-            else {
-                // Cek Max Stock
+            if (item.qty <= 0) {
+                cart.splice(idx, 1);
+            } else {
+                // Cek Max Stock saat ditambah
                 const masterProd = products.find(p => p.id === id);
-                if(item.qty > masterProd.stock) {
+                if (item.qty > masterProd.stock) {
                     item.qty = masterProd.stock;
                     alert("Maksimal stok!");
                 }
             }
+            
             updateCartUI();
         }
 
@@ -437,23 +539,35 @@
             // Update Header Badge
             const badge = document.getElementById('cartBadge');
             badge.innerText = totalItem;
-            if(totalItem > 0) badge.classList.replace('scale-0', 'scale-100');
-            else badge.classList.replace('scale-100', 'scale-0');
+            
+            if (totalItem > 0) {
+                badge.classList.replace('scale-0', 'scale-100');
+            } else {
+                badge.classList.replace('scale-100', 'scale-0');
+            }
 
             // Update Bottom Bar
             const bBar = document.getElementById('bottomCartBar');
             document.getElementById('bottomCartTotal').innerText = formatRupiah(totalPrice);
             document.getElementById('bottomCartItems').innerText = totalItem;
             
-            if(totalItem > 0) bBar.classList.replace('translate-y-full', 'translate-y-0');
-            else bBar.classList.replace('translate-y-0', 'translate-y-full');
+            if (totalItem > 0) {
+                bBar.classList.replace('translate-y-full', 'translate-y-0');
+            } else {
+                bBar.classList.replace('translate-y-0', 'translate-y-full');
+            }
 
-            // Update Modal UI
+            // Update Modal UI Pembayaran
             document.getElementById('modalTotalPay').innerText = formatRupiah(totalPrice);
             const clist = document.getElementById('cartItemsList');
             
-            if(cart.length === 0) {
-                clist.innerHTML = '<div class="text-center text-slate-400 text-sm mt-5 mb-10"><i data-lucide="shopping-cart" class="w-12 h-12 mx-auto mb-2 text-slate-200"></i>Keranjang Anda kosong.</div>';
+            if (cart.length === 0) {
+                clist.innerHTML = `
+                    <div class="text-center text-slate-400 text-sm mt-5 mb-10">
+                        <i data-lucide="shopping-cart" class="w-12 h-12 mx-auto mb-2 text-slate-200"></i>
+                        Keranjang Anda kosong.
+                    </div>
+                `;
                 lucide.createIcons();
             } else {
                 clist.innerHTML = cart.map(c => `
@@ -475,19 +589,26 @@
         }
 
         // ==========================================
-        // MODAL CHECKOUT
+        // MODAL CHECKOUT & PENGIRIMAN
         // ==========================================
         const cartModal = document.getElementById('cartModal');
         const cartContent = document.getElementById('cartContent');
 
         function toggleCart() {
-            if(cartModal.classList.contains('hidden')) {
+            if (cartModal.classList.contains('hidden')) {
                 updateCartUI(); // Refresh list just in case
                 cartModal.classList.remove('hidden');
-                setTimeout(() => cartContent.classList.replace('translate-y-full', 'translate-y-0'), 10);
+                
+                setTimeout(() => {
+                    cartContent.classList.replace('translate-y-full', 'translate-y-0');
+                }, 10);
+                
             } else {
                 cartContent.classList.replace('translate-y-0', 'translate-y-full');
-                setTimeout(() => cartModal.classList.add('hidden'), 300);
+                
+                setTimeout(() => {
+                    cartModal.classList.add('hidden');
+                }, 300);
             }
         }
 
@@ -496,23 +617,34 @@
             const bankArea = document.getElementById('bankInfoArea');
             const qrisArea = document.getElementById('qrisInfoArea');
 
+            // Sembunyikan semua dulu
             bankArea.classList.add('hidden');
             qrisArea.classList.add('hidden');
 
-            if(method === 'Transfer Bank' && storeData.bank_info) bankArea.classList.remove('hidden');
-            if(method === 'QRIS' && storeData.qris_url) qrisArea.classList.remove('hidden');
+            // Tampilkan sesuai pilihan
+            if (method === 'Transfer Bank' && storeData.bank_info) {
+                bankArea.classList.remove('hidden');
+            }
+            
+            if (method === 'QRIS' && storeData.qris_url) {
+                qrisArea.classList.remove('hidden');
+            }
         }
 
         async function submitOrderWA() {
-            if(cart.length === 0) return alert("Keranjang kosong!");
+            if (cart.length === 0) {
+                return alert("Keranjang kosong!");
+            }
             
             const buyer = document.getElementById('buyerName').value.trim();
             const notes = document.getElementById('buyerNotes').value.trim();
             const method = document.getElementById('paymentMethod').value;
 
-            if(!buyer || !notes) return alert("Mohon lengkapi Nama dan Alamat pengiriman.");
+            if (!buyer || !notes) {
+                return alert("Mohon lengkapi Nama dan Alamat pengiriman.");
+            }
 
-            // Tombol loading
+            // Set Tombol Loading
             const btn = document.getElementById('btnSubmitOrder');
             const originalText = btn.innerHTML;
             btn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Sedang memproses...`;
@@ -531,7 +663,7 @@
                 apiItemsArr.push(`${c.name} (${c.qty}${c.unit})`);
             });
 
-            // 1. Simpan ke database Backend (Orders)
+            // 1. Simpan ke database Backend (Sheet Orders)
             try {
                 let fd = new FormData();
                 fd.append('action', 'add_order');
@@ -541,18 +673,26 @@
                 fd.append('status', 'Baru'); // Status pesanan online baru
                 fd.append('detail_items', JSON.stringify(apiItemsArr));
                 fd.append('metode_pembayaran', method);
-                fd.append('uang_bayar', total); // Anggap pas untuk pesanan online
+                fd.append('uang_bayar', total); // Anggap dibayar pas untuk pesanan online
                 fd.append('kembalian', 0);
-                fd.append('no_wa_pembeli', ''); // Kosongin aja karena chat dari pembeli
+                fd.append('no_wa_pembeli', ''); // Kosongin aja karena chat akan dikirim manual dari hp pembeli
 
-                const res = await fetch(SCRIPT_URL, { method: 'POST', body: fd });
+                const res = await fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: fd 
+                });
+                
                 const json = await res.json();
                 let orderId = json.order_id || "ORD-" + Math.floor(Math.random() * 100000);
 
-                // 2. Generate Pesan WhatsApp
-                let waNumber = storeData.wa_number;
-                // Pastikan format wa bener (awalan 62)
-                if (waNumber.startsWith('0')) waNumber = '62' + waNumber.substring(1);
+                // 2. Generate Pesan WhatsApp untuk pembeli kirim ke Admin Toko
+                
+                // FIX FATAL ERROR: Paksa convert wa_number ke Teks/String sebelum di-cek pakai startsWith
+                let waNumber = String(storeData.wa_number || "");
+                
+                if (waNumber.startsWith('0')) {
+                    waNumber = '62' + waNumber.substring(1);
+                }
 
                 const greetings = storeData.auto_reply || 'Halo admin, saya mau pesan!';
                 
@@ -565,29 +705,30 @@
                 waMessage += `Metode Pembayaran: *${method}*\n\n`;
                 waMessage += `Mohon segera diproses ya. Terima kasih!`;
 
-                // Encode URL Text
+                // Encode URL Text agar enter dan spasi bisa terbaca oleh WhatsApp
                 const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
-                // Redirect ke WA
+                // Redirect ke WhatsApp
                 window.open(waUrl, '_blank');
 
-                // Sukses
+                // Jika sukses diarahkan, bersihkan keranjang
                 cart = [];
                 updateCartUI();
                 toggleCart();
-                alert("Pesanan berhasil dibuat! Anda diarahkan ke WhatsApp.");
+                alert("Pesanan berhasil dibuat! Anda akan diarahkan ke WhatsApp.");
 
             } catch (err) {
                 console.error("Error order:", err);
                 alert("Terjadi kesalahan sistem, silakan coba lagi.");
             } finally {
+                // Kembalikan tombol ke keadaan semula
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 lucide.createIcons();
             }
         }
 
-        // Helper Error Loader
+        // Helper Error Loader Component
         function showLoaderError(msg) {
             const loader = document.getElementById('loaderScreen');
             loader.innerHTML = `
@@ -598,7 +739,7 @@
             lucide.createIcons();
         }
 
-        // Jalankan saat web dibuka
+        // Event Listener saat HTML selesai diunduh
         document.addEventListener('DOMContentLoaded', fetchStoreCatalog);
     </script>
 </body>
