@@ -315,7 +315,7 @@
             <div id="view-set" class="view-section hidden max-w-3xl mx-auto space-y-6 pb-10">
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                     <h2 class="text-xl font-bold text-slate-800 mb-1">Pengaturan & Profil Toko</h2>
-                    <p class="text-sm text-slate-500">Sesuaikan identitas bisnis, integrasi WhatsApp, dan metode pembayaran Anda.</p>
+                    <p class="text-sm text-slate-500">Sesuaikan identitas bisnis, keamanan akun, integrasi WhatsApp, dan metode pembayaran Anda.</p>
                 </div>
 
                 <!-- Form Profil Toko -->
@@ -380,7 +380,29 @@
                             <p class="text-[10px] text-slate-500 mt-1">Jika dikonfigurasi, struk POS dan Lupa Password akan dikirim otomatis ke WhatsApp pelanggan.</p>
                         </div>
 
-                        <div class="pt-2">
+                        <!-- FITUR SECRET TAP LOGIN -->
+                        <h4 class="font-bold text-slate-700 mt-6 border-b pb-1">Keamanan Ekstra (Secret Tap Login)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Status Secret Login</label>
+                                <select id="setSecretStatus" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm bg-white">
+                                    <option value="off">Mati (Off)</option>
+                                    <option value="on">Aktif (On)</option>
+                                </select>
+                                <p class="text-[10px] text-slate-500 mt-1">Sembunyikan login admin di etalase toko.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Jumlah Ketukan</label>
+                                <input type="number" id="setSecretTap" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm" placeholder="5">
+                                <p class="text-[10px] text-slate-500 mt-1">Ketuk teks 'Powered by' untuk login.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">PIN Rahasia</label>
+                                <input type="password" id="setSecretPin" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm" placeholder="1234">
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
                             <button type="submit" id="btnSaveSet" class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center w-full justify-center">
                                 <span id="btnSaveSetText">Simpan Pengaturan</span>
                                 <i data-lucide="loader-2" id="btnSaveSetLoader" class="w-4 h-4 ml-2 animate-spin hidden"></i>
@@ -391,7 +413,7 @@
 
                 <!-- Form Ganti Password -->
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2"><i data-lucide="lock" class="w-5 h-5 text-slate-500"></i> Ganti Password</h3>
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2"><i data-lucide="lock" class="w-5 h-5 text-slate-500"></i> Ganti Password Utama</h3>
                     <form id="passwordForm" class="space-y-4 max-w-sm">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Password Lama</label>
@@ -696,6 +718,11 @@
             document.getElementById('setGatewayProvider').value = currentUser.gateway_provider || 'fonnte';
             document.getElementById('setGatewayToken').value = currentUser.gateway_token || '';
             document.getElementById('setGatewaySender').value = currentUser.gateway_sender || '';
+
+            // SECRET TAP LOGIN SETTINGS
+            document.getElementById('setSecretStatus').value = currentUser.secret_login_status || 'off';
+            document.getElementById('setSecretTap').value = currentUser.secret_tap_count || '5';
+            document.getElementById('setSecretPin').value = currentUser.secret_pin || '';
 
             // Fetch Data dari API
             fetchDashboardData();
@@ -1059,7 +1086,10 @@
                 bank_info: document.getElementById('setBank').value,
                 gateway_provider: document.getElementById('setGatewayProvider').value,
                 gateway_token: document.getElementById('setGatewayToken').value,
-                gateway_sender: document.getElementById('setGatewaySender').value
+                gateway_sender: document.getElementById('setGatewaySender').value,
+                secret_login_status: document.getElementById('setSecretStatus').value,
+                secret_tap_count: document.getElementById('setSecretTap').value,
+                secret_pin: document.getElementById('setSecretPin').value
             };
 
             const res = await apiCall('update_store_settings', payload);
