@@ -94,9 +94,6 @@
                 <p class="text-xs text-slate-500 mb-1">Belum punya toko?</p>
                 <a href="index.html" onclick="window.location.href='index.html'; return false;" class="text-sm font-bold text-emerald-600 hover:text-emerald-700 cursor-pointer">Daftar Gratis Sekarang</a>
             </div>
-            <div class="pt-3 border-t border-slate-200" id="demoAccounts">
-                <p class="text-[11px] text-slate-400">Demo Login: <b>admin/admin123</b> | <b>agency1/agency123</b> | <b>user1/user123</b></p>
-            </div>
         </div>
     </div>
 
@@ -119,10 +116,8 @@
                     if (res.success && res.data && res.data.app_mode === 'single') {
                         // Jika Mode Single Store aktif, matikan form pendaftaran dan info demo SaaS
                         const footerReg = document.getElementById('footerRegister');
-                        const demoAcc = document.getElementById('demoAccounts');
                         
                         if(footerReg) footerReg.classList.add('hidden');
-                        if(demoAcc) demoAcc.classList.add('hidden');
                     }
                 })
                 .catch(err => console.log("Gagal memuat konfigurasi mode:", err));
@@ -164,9 +159,9 @@
                                     logoContainer.classList.add('bg-white', 'border', 'border-slate-200');
                                 }
 
-                                // Sembunyikan bagian daftar & demo akun agar terlihat seperti web mandiri
-                                document.getElementById('footerRegister').classList.add('hidden');
-                                document.getElementById('demoAccounts').classList.add('hidden');
+                                // Sembunyikan bagian daftar agar terlihat seperti web mandiri
+                                const footerReg = document.getElementById('footerRegister');
+                                if(footerReg) footerReg.classList.add('hidden');
                             }
                         }
                     })
