@@ -107,6 +107,28 @@
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKbN_R8gdRG5_jLniXD0LXZSMTUiU8gO5Ae-s3FAnfxV7gpaRstdovRiJbS_izuZeQpw/exec';
 
         // ==========================================
+        // FITUR PENGATURAN MODE (SINGLE STORE)
+        // ==========================================
+        function checkAppMode() {
+            let fd = new FormData();
+            fd.append('action', 'get_app_settings');
+            
+            fetch(SCRIPT_URL, { method: 'POST', body: fd })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success && res.data && res.data.app_mode === 'single') {
+                        // Jika Mode Single Store aktif, matikan form pendaftaran dan info demo SaaS
+                        const footerReg = document.getElementById('footerRegister');
+                        const demoAcc = document.getElementById('demoAccounts');
+                        
+                        if(footerReg) footerReg.classList.add('hidden');
+                        if(demoAcc) demoAcc.classList.add('hidden');
+                    }
+                })
+                .catch(err => console.log("Gagal memuat konfigurasi mode:", err));
+        }
+
+        // ==========================================
         // FITUR SMART LOGIN (Bunglon sesuai Toko)
         // ==========================================
         function loadStoreBranding() {
@@ -153,7 +175,10 @@
         }
         
         // Panggil saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', loadStoreBranding);
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAppMode();
+            loadStoreBranding();
+        });
 
         // ==========================================
         // Toggle Form Login vs Lupa Password
