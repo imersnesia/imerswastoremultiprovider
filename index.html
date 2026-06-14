@@ -13,6 +13,25 @@
     
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- FITUR SAKLAR LANDING PAGE (SaaS Mode) -->
+    <script>
+        const SETTING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKbN_R8gdRG5_jLniXD0LXZSMTUiU8gO5Ae-s3FAnfxV7gpaRstdovRiJbS_izuZeQpw/exec';
+        
+        let fdSettings = new FormData();
+        fdSettings.append('action', 'get_app_settings');
+        
+        // Mengecek apakah landing page ini diizinkan tampil oleh Admin
+        fetch(SETTING_SCRIPT_URL, { method: 'POST', body: fdSettings })
+            .then(res => res.json())
+            .then(res => {
+                if(res.success && res.data && res.data.show_landing_page === 'off') {
+                    // Jika dimatikan, paksa tendang pengunjung ke halaman login
+                    window.location.replace('login.html');
+                }
+            })
+            .catch(err => console.log("Gagal memuat konfigurasi awal", err));
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -267,7 +286,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
