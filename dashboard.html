@@ -351,7 +351,7 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- VIEW: PENGATURAN -->
+            <!-- VIEW: PENGATURAN TOKO -->
             <!-- ========================================== -->
             <div id="view-set" class="view-section hidden max-w-3xl mx-auto space-y-6 pb-10">
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
@@ -393,6 +393,22 @@
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Teks Sambutan Auto-Reply WhatsApp</label>
                             <textarea id="setAutoReply" rows="2" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm"></textarea>
+                        </div>
+
+                        <!-- FITUR DESAIN TOKO (Warna & Banner) -->
+                        <h4 class="font-bold text-slate-700 mt-6 border-b pb-1">Desain & Tampilan Toko</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Warna Tema (Background)</label>
+                                <div class="flex items-center gap-3">
+                                    <input type="color" id="setThemeColor" class="h-10 w-16 p-1 border border-slate-200 rounded cursor-pointer" value="#f8fafc">
+                                    <span class="text-xs text-slate-500">Pilih warna untuk background toko online Anda</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">URL Banner Slider Toko (Opsional)</label>
+                                <input type="url" id="setBannerUrl" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm" placeholder="https://link-gambar-banner">
+                            </div>
                         </div>
                         
                         <!-- Form QRIS & Bank -->
@@ -483,6 +499,45 @@
                 </div>
             </div>
 
+            <!-- ========================================== -->
+            <!-- VIEW: PENGATURAN GLOBAL SISTEM (HANYA ADMIN)-->
+            <!-- ========================================== -->
+            <div id="view-global-set" class="view-section hidden max-w-3xl mx-auto space-y-6 pb-10">
+                <div class="bg-slate-900 p-6 rounded-xl shadow-md text-white">
+                    <h2 class="text-xl font-bold mb-1">Pengaturan Sistem (Global)</h2>
+                    <p class="text-sm text-slate-400">Atur arsitektur platform SaaS vs Single Store dan visibilitas halaman utama. Hanya untuk Super Admin.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <form id="globalSettingForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Mode Platform / Arsitektur</label>
+                            <select id="setAppMode" class="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm bg-slate-50 font-medium">
+                                <option value="saas">SaaS Mode (Multi-Tenant, Ada Agency & Manajemen User)</option>
+                                <option value="single">Single Store Mode (Toko Mandiri, Fokus 1 Brand)</option>
+                            </select>
+                            <p class="text-xs text-slate-500 mt-2">Jika diubah ke "Single Store", menu "Manajemen Pengguna" akan disembunyikan secara permanen dari sistem.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Visibilitas Landing Page (index.html)</label>
+                            <select id="setShowLanding" class="w-full px-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 text-sm bg-slate-50 font-medium">
+                                <option value="on">Aktif (Tampilkan Landing Page Utama)</option>
+                                <option value="off">Mati (Redirect otomatis pengunjung ke halaman Login/Toko)</option>
+                            </select>
+                            <p class="text-xs text-slate-500 mt-2">Matikan opsi ini jika Anda ingin platform terlihat eksklusif sebagai portal login tanpa halaman pameran (Showcase).</p>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100">
+                            <button type="submit" id="btnSaveGlobal" class="bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center justify-center w-full">
+                                <span id="btnSaveGlobalText">Simpan Pengaturan Global</span>
+                                <i data-lucide="loader-2" id="btnSaveGlobalLoader" class="w-4 h-4 ml-2 animate-spin hidden"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -490,7 +545,7 @@
     <!-- MODALS SECTION -->
     <!-- ========================================== -->
     
-    <!-- Modal Add/Edit Product (Dengan Fitur Satuan & Deskripsi) -->
+    <!-- Modal Add/Edit Product (Dengan Fitur Satuan & Deskripsi & Badge) -->
     <div id="productModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal('productModal')"></div>
         <div class="flex items-center justify-center min-h-screen px-4 py-8">
@@ -522,7 +577,6 @@
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
-                        <!-- FITUR SATUAN DITAMBAHKAN DI SINI -->
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1">Satuan Produk</label>
                             <select id="prodSatuan" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-500 text-sm bg-white">
@@ -536,12 +590,23 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">URL Gambar</label>
-                            <input type="url" id="prodImg" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-500 text-sm" placeholder="https://...">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Badge (Opsional)</label>
+                            <select id="prodBadge" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-500 text-sm bg-white text-emerald-600 font-medium">
+                                <option value="">-- Kosong --</option>
+                                <option value="Promo">Promo</option>
+                                <option value="Terlaris">Terlaris</option>
+                                <option value="Diskon 50%">Diskon 50%</option>
+                                <option value="Exclusive">Exclusive</option>
+                                <option value="Pre-Order">Pre-Order</option>
+                            </select>
                         </div>
                     </div>
                     
-                    <!-- FITUR DESKRIPSI DITAMBAHKAN DI SINI -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">URL Gambar</label>
+                        <input type="url" id="prodImg" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-500 text-sm" placeholder="https://...">
+                    </div>
+                    
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi Singkat (Opsional)</label>
                         <textarea id="prodDesc" rows="2" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-emerald-500 text-sm" placeholder="Jelaskan detail produk untuk pembeli..."></textarea>
@@ -724,11 +789,12 @@
         let globalProducts = [];
         let globalOrders = [];
         let globalUsers = [];
+        let appSettings = { app_mode: 'saas', show_landing_page: 'on' }; // Variabel setting global
         let cart = [];
         let totalCartValue = 0;
 
         // --- 1. INISIALISASI UI BERDASARKAN SESSION ---
-        function initApp() {
+        async function initApp() {
             if (!currentUser) return; 
             
             // Header Info & Sidebar Brand 
@@ -774,23 +840,6 @@
                 window.open('toko.html?t=' + currentUser.slug_toko, '_blank');
             };
 
-            // Setup Navigation Menu (Role Based)
-            const navMenu = document.getElementById('navMenu');
-            let menus = createMenuHTML('dashboard', 'layout-dashboard', 'Dashboard');
-            
-            if (currentUser.role === 'admin' || currentUser.role === 'agency') {
-                menus += createMenuHTML('users', 'users', 'Manajemen User');
-            }
-            
-            menus += createMenuHTML('prod', 'package', 'Katalog Produk');
-            menus += createMenuHTML('order', 'shopping-cart', 'Pesanan Masuk');
-            menus += createMenuHTML('pos', 'calculator', 'Kasir POS');
-            menus += createMenuHTML('set', 'settings', 'Pengaturan');
-            
-            navMenu.innerHTML = menus;
-            switchView('dashboard');
-            lucide.createIcons();
-
             // Isi nilai default form Setting (Profil Toko)
             document.getElementById('setNamaToko').value = currentUser.nama_toko || '';
             document.getElementById('setSlugToko').value = currentUser.slug_toko || '';
@@ -810,11 +859,43 @@
             document.getElementById('setSecretTap').value = currentUser.secret_tap_count || '5';
             document.getElementById('setSecretPin').value = currentUser.secret_pin || '';
 
+            // TAMPILAN BANNER & TEMA BARU
+            document.getElementById('setBannerUrl').value = currentUser.banner_url || '';
+            document.getElementById('setThemeColor').value = currentUser.theme_color || '#f8fafc';
+
+            // Fetch Global Setting dulu sebelum render menu
+            await fetchGlobalSettings();
+            
             // Fetch Data dari API
             fetchDashboardData();
             if (currentUser.role === 'admin' || currentUser.role === 'agency') {
                 fetchUsersData();
             }
+        }
+
+        // Render Navigasi Menu berdasarkan Role dan Mode Aplikasi
+        function renderNavigation() {
+            const navMenu = document.getElementById('navMenu');
+            let menus = createMenuHTML('dashboard', 'layout-dashboard', 'Dashboard');
+            
+            // JIKA MODE SAAS, Tampilkan Manajemen User untuk Admin/Agency
+            if (appSettings.app_mode === 'saas' && (currentUser.role === 'admin' || currentUser.role === 'agency')) {
+                menus += createMenuHTML('users', 'users', 'Manajemen User');
+            }
+            
+            menus += createMenuHTML('prod', 'package', 'Katalog Produk');
+            menus += createMenuHTML('order', 'shopping-cart', 'Pesanan Masuk');
+            menus += createMenuHTML('pos', 'calculator', 'Kasir POS');
+            menus += createMenuHTML('set', 'settings', 'Pengaturan Toko');
+
+            // JIKA ROLE ADALAH SUPER ADMIN, Tampilkan Pengaturan Global
+            if (currentUser.role === 'admin') {
+                menus += createMenuHTML('global-set', 'settings-2', 'Pengaturan Global');
+            }
+            
+            navMenu.innerHTML = menus;
+            switchView('dashboard');
+            lucide.createIcons();
         }
 
         function createMenuHTML(id, icon, text) {
@@ -884,6 +965,19 @@
         }
 
         // --- 3. FETCH & RENDER DATA ---
+        async function fetchGlobalSettings() {
+            const res = await apiCall('get_app_settings');
+            if (res.success && res.data) {
+                appSettings = res.data;
+                const setAppModeEl = document.getElementById('setAppMode');
+                const setShowLandingEl = document.getElementById('setShowLanding');
+                
+                if (setAppModeEl) setAppModeEl.value = appSettings.app_mode || 'saas';
+                if (setShowLandingEl) setShowLandingEl.value = appSettings.show_landing_page || 'on';
+            }
+            renderNavigation();
+        }
+
         async function fetchDashboardData() {
             if (!currentUser) return;
             
@@ -930,13 +1024,16 @@
                 return;
             }
             
-            tbody.innerHTML = globalProducts.map(p => `
+            tbody.innerHTML = globalProducts.map(p => {
+                let badgeHtml = p.badge ? `<span class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold mt-1 inline-block">${p.badge}</span>` : '';
+                
+                return `
                 <tr class="hover:bg-slate-50 border-b border-slate-100">
                     <td class="px-6 py-4 flex items-center gap-3">
                         <img src="${p.img || 'https://placehold.co/100x100/e2e8f0/64748b?text=Box'}" class="w-10 h-10 rounded-lg object-cover">
                         <div>
-                            <div class="font-bold text-slate-800">${p.name}</div>
-                            <div class="text-[10px] text-slate-400 w-48 truncate">${p.desc || '-'}</div>
+                            <div class="font-bold text-slate-800 flex flex-col items-start">${p.name} ${badgeHtml}</div>
+                            <div class="text-[10px] text-slate-400 w-48 truncate mt-1">${p.desc || '-'}</div>
                         </div>
                     </td>
                     <td class="px-6 py-4">
@@ -951,7 +1048,8 @@
                         <button onclick="deleteProduct('${p.id}')" class="text-red-500 hover:text-red-700 text-sm font-medium">Hapus</button>
                     </td>
                 </tr>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // Render Orders (Tabel Pesanan Masuk)
@@ -1052,8 +1150,9 @@
                     document.getElementById('prodPrice').value = p.price;
                     document.getElementById('prodStock').value = p.stock;
                     
-                    // Satuan dan Deskripsi akan di-set jika nilainya ada
+                    // Satuan, Badge, dan Deskripsi
                     document.getElementById('prodSatuan').value = p.unit || 'pcs';
+                    document.getElementById('prodBadge').value = p.badge || '';
                     document.getElementById('prodImg').value = p.img;
                     document.getElementById('prodDesc').value = p.desc || '';
                 }
@@ -1080,6 +1179,7 @@
                 harga: document.getElementById('prodPrice').value,
                 stok: document.getElementById('prodStock').value,
                 satuan: document.getElementById('prodSatuan').value,
+                badge: document.getElementById('prodBadge').value,
                 gambar: document.getElementById('prodImg').value,
                 deskripsi: document.getElementById('prodDesc').value
             };
@@ -1229,6 +1329,40 @@
         }
 
         // --- 6. SETTINGS & PASSWORD LOGIC ---
+
+        // Form Global Settings (Hanya Super Admin)
+        const globalSettingForm = document.getElementById('globalSettingForm');
+        if (globalSettingForm) {
+            globalSettingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const btn = document.getElementById('btnSaveGlobalText');
+                const loader = document.getElementById('btnSaveGlobalLoader');
+                
+                btn.innerText = "Menyimpan..."; 
+                loader.classList.remove('hidden');
+
+                const payload = {
+                    app_mode: document.getElementById('setAppMode').value,
+                    show_landing_page: document.getElementById('setShowLanding').value
+                };
+
+                const res = await apiCall('update_app_settings', payload);
+                
+                btn.innerText = "Simpan Pengaturan Global"; 
+                loader.classList.add('hidden');
+
+                if (res.success) {
+                    showGlobalAlert("Pengaturan Global berhasil disimpan!", true);
+                    appSettings.app_mode = payload.app_mode;
+                    appSettings.show_landing_page = payload.show_landing_page;
+                    renderNavigation(); // Render ulang navigasi barangkali mode berubah
+                } else {
+                    alert(res.message);
+                }
+            });
+        }
+
         document.getElementById('settingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -1252,7 +1386,9 @@
                 gateway_sender: document.getElementById('setGatewaySender').value,
                 secret_login_status: document.getElementById('setSecretStatus').value,
                 secret_tap_count: document.getElementById('setSecretTap').value,
-                secret_pin: document.getElementById('setSecretPin').value
+                secret_pin: document.getElementById('setSecretPin').value,
+                banner_url: document.getElementById('setBannerUrl').value,
+                theme_color: document.getElementById('setThemeColor').value
             };
 
             const res = await apiCall('update_store_settings', payload);
@@ -1311,15 +1447,19 @@
                 return;
             }
             
-            grid.innerHTML = productsList.map(p => `
-                <div onclick="addToCart('${p.id}')" class="bg-white border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-emerald-500 hover:shadow-md transition-all group">
-                    <div class="h-24 w-full bg-slate-100 rounded-lg mb-2 overflow-hidden">
+            grid.innerHTML = productsList.map(p => {
+                let badgeHtml = p.badge ? `<div class="absolute top-1 right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm z-10">${p.badge}</div>` : '';
+                return `
+                <div onclick="addToCart('${p.id}')" class="bg-white border border-slate-200 rounded-xl p-3 cursor-pointer hover:border-emerald-500 hover:shadow-md transition-all group relative">
+                    <div class="h-24 w-full bg-slate-100 rounded-lg mb-2 overflow-hidden relative">
                         <img src="${p.img || 'https://placehold.co/100x100/e2e8f0/64748b?text=Box'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        ${badgeHtml}
                     </div>
                     <h4 class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-2 leading-tight">${p.name}</h4>
                     <p class="text-emerald-600 font-bold text-sm mt-1">${formatRupiah(p.price)}</p>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function addToCart(id) {
